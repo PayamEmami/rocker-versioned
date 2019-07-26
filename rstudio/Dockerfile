@@ -107,7 +107,14 @@ COPY add_shiny.sh /etc/cont-init.d/add
 COPY disable_auth_rserver.conf /etc/rstudio/disable_auth_rserver.conf
 COPY pam-helper.sh /usr/lib/rstudio-server/bin/pam-helper
 
+RUN  apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates
 
+## Prevent rstudio from deciding to use /usr/bin/R if a user apt-get installs a package \
+#RUN echo 'rsession-which-r=/usr/bin/R' >> /etc/rstudio/rserver.conf
+  
+## use more robust file locking to avoid errors when using shared volumes: 
+RUN echo 'lock-type=advisory' >> /etc/rstudio/file-locks
 
 EXPOSE 8787
 

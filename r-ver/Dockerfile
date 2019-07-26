@@ -128,5 +128,7 @@ RUN apt-get update \
   && apt-get autoclean -y \
   && rm -rf /var/lib/apt/lists/*
 
+RUN R -e 'install.packages(c("batchtools","future.batchtools","listenv"))'
+
 CMD ["R"]
 

@@ -28,7 +28,7 @@ else
 # set delimitator
 IFS=','
 # loop for all users
-wget -O /tmp/UserPass.txt $rstudioPWD
+wget --no-check-certificate -O /tmp/UserPass.txt $rstudioPWD
 file="/tmp/UserPass.txt"
 
 while read USER PASSWORD USERID GROUPID ROOT UMASK

@@ -69,6 +69,8 @@ RUN apt-get update \
     xfonts-base \
     xvfb \
     zlib1g-dev" \
+#libv8-dev \
+#libnetcdf-dev  libxml2-dev  libblas-dev liblapack-dev libssl-dev pkg-config git xorg xorg-dev libglu1-mesa-dev libgl1-mesa-dev \
   && apt-get install -y --no-install-recommends $BUILDDEPS \
   && cd tmp/ \
   ## Download source code
@@ -128,7 +130,50 @@ RUN apt-get update \
   && apt-get autoclean -y \
   && rm -rf /var/lib/apt/lists/*
 
+
 RUN R -e 'install.packages(c("batchtools","future.batchtools","listenv"))'
+
+RUN R -e 'install.packages(c("doFuture"))'
+
+RUN R -e 'install.packages(c("BiocManager"))'
+
+RUN R -e 'BiocManager::install(c("mixOmics","ropls","limma"))'
+
+RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-openssl-dev libxml2-dev \
+libnetcdf-dev  libxml2-dev  libblas-dev liblapack-dev libssl-dev pkg-config libglu1-mesa-dev libgl1-mesa-dev
+
+RUN apt-get update && apt-get install -y --no-install-recommends  libbz2-dev libssl-dev
+
+RUN R -e 'BiocManager::install(c(\
+            "KODAMA","bestNormalize","DiagrammeR","dplyr"))'
+
+RUN apt-get update && apt-get install -y --no-install-recommends  libv8-dev
+
+RUN R -e 'BiocManager::install(c(\
+            "magrittr","DiagrammeRsvg","caret","car","MDimNormn","sda","ICSNP"))'
+
+
+RUN R -e 'BiocManager::install(c(\
+            "EnvStats","sva","metabomxtr","COCONUT","bestNormalize"))'
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends  liblzma-dev
+
+RUN R -e 'BiocManager::install(c(\
+            "DESeq2","cowplot","ggrepel","doSNOW","reshape","logistf","pROC","HDMD","lumi","metabolomics"))'
+
+
+
+RUN R -e 'BiocManager::install("gplots")'
+
+RUN R -e 'BiocManager::install(c("pcaMethods"))'
+
+RUN R -e 'install.packages("crmn")'
+
+
+RUN R -e 'install.packages("https://cran.r-project.org/src/contrib/Archive/metabolomics/metabolomics_0.1.4.tar.gz",repo=NULL,type="source")'
+
+
 
 CMD ["R"]
 

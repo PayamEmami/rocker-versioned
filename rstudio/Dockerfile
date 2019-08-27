@@ -164,5 +164,6 @@ EXPOSE 8787
 
 ## automatically link a shared volume for kitematic users
 VOLUME /home/rstudio/kitematic
-
+#RUN  echo 'ssl-redirect-http=0' >> /etc/rstudio/rserver.conf
+#RUN  echo 'www-address=127.0.0.1' >> /etc/rstudio/rserver.conf
 CMD ["/init"]
